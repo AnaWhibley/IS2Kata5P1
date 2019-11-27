@@ -20,7 +20,9 @@ public class Kata5P1 {
             System.out.println("Base de Datos conectada..");
             selectData_PEOPLE(connection);
             System.out.println("***************");
-            selectData_PEOPLE(connection);
+            //createTable_EMAIL(connection);
+            selectData_EMAIL(connection);
+            System.out.println("***************");
         }
         catch(SQLException exception) {
             System.out.println("Error en Kata5::connect(SQLException) " + exception.getMessage());
@@ -49,6 +51,33 @@ public class Kata5P1 {
                                     + resultset.getString("Nombre") + "\t\t " 
                                     + resultset.getString("Apellidos") + "\t "
                                     + resultset.getString("Departamento"));
+            }
+        }
+        catch(SQLException exception) {
+            System.out.println("Error en Kata5::select(SQLException) " + exception.getMessage());
+        }
+    }
+    
+    private static void createTable_EMAIL(Connection connection) {
+        String SQL = "CREATE TABLE 'EMAIL'('ID' INTEGER PRIMARY KEY AUTOINCREMENT, 'Mail' TEXT NOT NULL)";
+        try {
+            Statement statement = connection.createStatement();
+            int resultset = statement.executeUpdate(SQL);
+        }
+        catch(SQLException exception) {
+            System.out.println("Error en Kata5::createTable(SQLException) " + exception.getMessage());
+        }
+    }
+    
+    private static void selectData_EMAIL(Connection connection) {
+        String SQL = "SELECT * FROM EMAIL";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultset = statement.executeQuery(SQL);
+            System.out.println("ID \t MAIL");
+            while(resultset.next()) {
+                System.out.println(resultset.getInt("ID") + "\t " 
+                                    + resultset.getString("Mail"));
             }
         }
         catch(SQLException exception) {
