@@ -2,9 +2,11 @@ package kata5p1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class Kata5P1 {
     
@@ -18,9 +20,10 @@ public class Kata5P1 {
         try {
             connection = DriverManager.getConnection(URL_BD_SQLite);
             System.out.println("Base de Datos conectada..");
-            selectData_PEOPLE(connection);
+            //selectData_PEOPLE(connection);
             System.out.println("***************");
             //createTable_EMAIL(connection);
+            insertData_EMAIL(connection);
             selectData_EMAIL(connection);
             System.out.println("***************");
         }
@@ -82,6 +85,24 @@ public class Kata5P1 {
         }
         catch(SQLException exception) {
             System.out.println("Error en Kata5::select(SQLException) " + exception.getMessage());
+        }
+    }
+    
+    private static void insertData_EMAIL(Connection connection) {
+        String SQL = "INSERT INTO EMAIL(ID,MAIL) VALUES (?,?)";
+        int i = 3;
+        List<String> emails = MailListReader.read("C:\\Users\\Usuario\\Desktop\\Kata5P1\\src\\kata5p1\\email.txt");
+     
+        try {
+            for(String email : emails){
+                PreparedStatement preparedstatement = connection.prepareStatement(SQL);
+                preparedstatement.setInt(1, i++);
+                preparedstatement.setString(2,email);
+                preparedstatement.executeUpdate();
+            }
+        }
+        catch(SQLException exception) {
+            System.out.println("Error en Kata5::preparedStatement(SQLException) " + exception.getMessage());
         }
     }
     
