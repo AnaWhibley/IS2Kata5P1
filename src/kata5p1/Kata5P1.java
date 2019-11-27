@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Kata5P1 {
-
     
     public static void main(String[] args) {
         String URL_BD_SQLite = "jdbc:sqlite:C:\\Users\\Usuario\\Desktop\\Kata5P1\\src\\kata5p1\\KATA5.db"; 
